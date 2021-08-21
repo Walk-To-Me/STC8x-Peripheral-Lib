@@ -33,13 +33,13 @@
 
 
 /*-----------------------------------------------------------------------
-|                             CMD CONFIG			                    |
+|                             CMD CONFIG                                |
 -----------------------------------------------------------------------*/
 #define SET_CONTRAST						0x81
 #define SET_ENTIRE_ON						0xa4
 #define SET_NORM_INV						0xa6
 #define SET_DISP_OFF						0xae
-#define SET_DISP_ON							0xaf
+#define SET_DISP_ON						0xaf
 #define	SET_MEM_ADDR						0x20
 #define	SET_COL_ADDR						0x21
 #define	SET_PAGE_ADDR						0x22
@@ -53,21 +53,21 @@
 #define SET_PRECHARGE						0xd9
 #define SET_VCOM_DESEL						0xdb
 #define SET_CHARGE_PUMP						0x8d
-#define SET_HORIZONTAL_SCROLL				0x26
+#define SET_HORIZONTAL_SCROLL					0x26
 #define SET_SCROLL_ON						0x2f
 #define SET_SCROLL_OFF						0x2e
 
 /*-----------------------------------------------------------------------
-|                             USER CONFIG	                            |
+|                             USER CONFIG                               |
 -----------------------------------------------------------------------*/
-#define X_WIDTH 							128							// OLED屏幕宽度
-#define Y_WIDTH								64							// OLED屏幕高度
-#define PAGE								(Y_WIDTH >> 3)				// OLED屏幕页数
-#define EXTERNAL_VCC						DISABLE						// 是否启用外部电源
+#define X_WIDTH 						128					// OLED屏幕宽度
+#define Y_WIDTH							64					// OLED屏幕高度
+#define PAGE							(Y_WIDTH >> 3)				// OLED屏幕页数
+#define EXTERNAL_VCC						DISABLE					// 是否启用外部电源
 
 
 /*-----------------------------------------------------------------------
-|                             CMD_VAL CONFIG	                        |
+|                             CMD_VAL CONFIG                            |
 -----------------------------------------------------------------------*/
 #define SET_MUX_RATIO_VAL					(Y_WIDTH - 1)
 #define SET_DISP_OFFSET_VAL					0x00
@@ -76,11 +76,11 @@
 #define SET_CONTRAST_VAL					0x7f
 #define SET_PRECHARGE_VAL					(EXTERNAL_VCC ? 0x22 : 0xf1)
 #define SET_VCOM_DESEL_VAL					0x30
-#define SET_DISP_CLK_DIV_VAL				0x80
+#define SET_DISP_CLK_DIV_VAL					0x80
 #define SET_CHARGE_PUMP_VAL					(EXTERNAL_VCC ? 0x10 : 0x14)
 
 /*-----------------------------------------------------------------------
-|                             Type DEFINE	                            |
+|                             Type DEFINE                               |
 -----------------------------------------------------------------------*/
 typedef enum
 {
