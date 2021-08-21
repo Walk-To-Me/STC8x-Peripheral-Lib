@@ -33,20 +33,20 @@
 #include "STC8x_DELAY.h"
 
 /*-----------------------------------------------------------------------
-|                             USER CONFIG	                              |
+|                             USER CONFIG	                            |
 -----------------------------------------------------------------------*/
-#define AHT10_ADDR								0x38																	// AHT10器件地址
+#define AHT10_ADDR						0x38							// AHT10器件地址
 
 /*-----------------------------------------------------------------------
-|                             CMD CONFIG			                          |
+|                             CMD CONFIG			                    |
 -----------------------------------------------------------------------*/
-#define AHT10_WR_ADDR							(AHT10_ADDR << 1)											// 写命令
-#define AHT10_RD_ADDR							((AHT10_ADDR << 1) | 1)								// 读命令
-#define AHT10_CMD_INITIALIZE			0xe1																	// 初始化命令
-#define AHT10_CMD_TRIGGER					0xac																	// 触发测量命令
-#define AHT10_CMD_SOFTRST					0xba																	// 软件复位命令
-#define AHTX0_STATUS_BUSY					0x80																	// 忙状态标志位
-#define AHTX0_STATUS_CALIBRATED		0x08																	// 校准状态标志位
+#define AHT10_WR_ADDR					(AHT10_ADDR << 1)				// 写命令
+#define AHT10_RD_ADDR					((AHT10_ADDR << 1) | 1)			// 读命令
+#define AHT10_CMD_INITIALIZE			0xe1							// 初始化命令
+#define AHT10_CMD_TRIGGER				0xac							// 触发测量命令
+#define AHT10_CMD_SOFTRST				0xba							// 软件复位命令
+#define AHTX0_STATUS_BUSY				0x80							// 忙状态标志位
+#define AHTX0_STATUS_CALIBRATED			0x08							// 校准状态标志位
 
 
 /*-----------------------------------------------------------------------

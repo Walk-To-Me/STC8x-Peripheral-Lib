@@ -32,14 +32,14 @@
 #include "STC8x_I2C.h"
 
 
-/*--------------------------------------------------------
-| @Description: SSD1306 CMD                       |
---------------------------------------------------------*/
+/*-----------------------------------------------------------------------
+|                             CMD CONFIG			                    |
+-----------------------------------------------------------------------*/
 #define SET_CONTRAST        				0x81
 #define SET_ENTIRE_ON       				0xa4
 #define SET_NORM_INV        				0xa6
-#define SET_DISP_OFF            		0xae
-#define SET_DISP_ON									0xaf
+#define SET_DISP_OFF            			0xae
+#define SET_DISP_ON							0xaf
 #define	SET_MEM_ADDR        				0x20
 #define	SET_COL_ADDR        				0x21
 #define	SET_PAGE_ADDR       				0x22
@@ -54,49 +54,62 @@
 #define SET_VCOM_DESEL      				0xdb
 #define SET_CHARGE_PUMP     				0x8d
 #define SET_HORIZONTAL_SCROLL				0x26
-#define SET_SCROLL_ON								0x2f
-#define SET_SCROLL_OFF							0x2e
+#define SET_SCROLL_ON						0x2f
+#define SET_SCROLL_OFF						0x2e
 
-typedef enum
-{
-	SSD1306_Tran_Cmd 					= 0x00,			/* SSD1306 write cmd  */
-	SSD1306_Tran_Data 				= 0x01			/* SSD1306 write data */
-}	SSD1306_Type;
-
-typedef enum
-{
-	Scroll_Time_2 		= 0x07,		/* 2 		frames */
-	Scroll_Time_3 		= 0x04,		/* 3 		frames */
-	Scroll_Time_4			= 0x05,		/* 4 		frames */
-	Scroll_Time_5			= 0x00,		/* 5 		frames */
-	Scroll_Time_25		= 0x06,		/* 25 	frames */
-	Scroll_Time_64		= 0x01,		/* 64 	frames */
-	Scroll_Time_128		= 0x02,		/* 128 	frames */
-	Scroll_Time_256		= 0x03		/* 256 	frames */
-}	SCROLL_TIME_Type;
-
-typedef enum
-{
-	FONT_SIZE_16 							= 16,			/* font size 16 */
-}	FONT_SIZE_Type;
+/*-----------------------------------------------------------------------
+|                             USER CONFIG	                            |
+-----------------------------------------------------------------------*/
+#define X_WIDTH 							128							// OLED屏幕宽度
+#define Y_WIDTH								64							// OLED屏幕高度
+#define PAGE								(Y_WIDTH >> 3)				// OLED屏幕页数
+#define EXTERNAL_VCC						DISABLE						// 是否启用外部电源
 
 
-#define X_WIDTH 										128
-#define Y_WIDTH											64
-#define PAGE												(Y_WIDTH >> 3)
-#define EXTERNAL_VCC								DISABLE
-
-#define SET_MUX_RATIO_VAL						(Y_WIDTH - 1)
+/*-----------------------------------------------------------------------
+|                             CMD_VAL CONFIG	                        |
+-----------------------------------------------------------------------*/
+#define SET_MUX_RATIO_VAL					(Y_WIDTH - 1)
 #define SET_DISP_OFFSET_VAL					0x00
-#define SET_MEM_ADDR_VAL						0x02
+#define SET_MEM_ADDR_VAL					0x02
 #define SET_COM_PIN_CFG_VAL					(Y_WIDTH == 32 ? 0x02 : 0x12)
-#define SET_CONTRAST_VAL						0x7f
-#define SET_PRECHARGE_VAL						(EXTERNAL_VCC ? 0x22 : 0xf1)
+#define SET_CONTRAST_VAL					0x7f
+#define SET_PRECHARGE_VAL					(EXTERNAL_VCC ? 0x22 : 0xf1)
 #define SET_VCOM_DESEL_VAL					0x30
 #define SET_DISP_CLK_DIV_VAL				0x80
 #define SET_CHARGE_PUMP_VAL					(EXTERNAL_VCC ? 0x10 : 0x14)
 
+/*-----------------------------------------------------------------------
+|                             Type DEFINE	                            |
+-----------------------------------------------------------------------*/
+typedef enum
+{
+	SSD1306_Tran_Cmd 	= 0x00,			/* SSD1306 write cmd  */
+	SSD1306_Tran_Data 	= 0x01			/* SSD1306 write data */
+}	SSD1306_Type;
 
+typedef enum
+{
+	Scroll_Time_2 		= 0x07,			/* 2 frames */
+	Scroll_Time_3 		= 0x04,			/* 3 frames */
+	Scroll_Time_4		= 0x05,			/* 4 frames */
+	Scroll_Time_5		= 0x00,			/* 5 frames */
+	Scroll_Time_25		= 0x06,			/* 25 frames */
+	Scroll_Time_64		= 0x01,			/* 64 frames */
+	Scroll_Time_128		= 0x02,			/* 128 frames */
+	Scroll_Time_256		= 0x03			/* 256 frames */
+}	SCROLL_TIME_Type;
+
+typedef enum
+{
+	FONT_SIZE_16 		= 16,			/* font size 16 */
+}	FONT_SIZE_Type;
+
+
+
+/*-----------------------------------------------------------------------
+|                             API FUNCTION                              |
+-----------------------------------------------------------------------*/
 void SSD1306_Init(void);
 void SSD1306_Display_On(void);
 void SSD1306_Display_Off(void);

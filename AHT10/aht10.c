@@ -41,15 +41,15 @@ static FSCSTATE AHT10_Get_Data(uint8_t *dat);
 -----------------------------------------------------------------------*/
 
 /**
- * @brief     AHT10初始化函数
- * @param[in] void
- * @return    FSC_SUCCESS		初始化成功
- * @return		FSC_FAIL			初始化失败
+ * @brief     	AHT10初始化函数
+ * @param[in] 	void
+ * @return    	FSC_SUCCESS	初始化成功
+ * @return		FSC_FAIL	初始化失败
 **/
 FSCSTATE AHT10_Init(void)
 {
-	DELAY_Set_Ms(45);																		// 上电延时
-	EAXFR_ENABLE();																			// (!important)
+	DELAY_Set_Ms(45);									// 上电延时
+	EAXFR_ENABLE();										// (!important)
 	I2C_Send_Start();
 	I2C_Send_Btye(AHT10_WR_ADDR);
 	I2C_Read_ACK();
@@ -60,8 +60,8 @@ FSCSTATE AHT10_Init(void)
 	I2C_Send_Btye(0x00);
 	I2C_Read_ACK();
 	I2C_Send_Stop();
-	EAXFR_DISABLE();																		// (!important)
-	if (AHT10_Get_State() & AHTX0_STATUS_CALIBRATED)		// 检测校准状态标志位
+	EAXFR_DISABLE();									// (!important)
+	if (AHT10_Get_State() & AHTX0_STATUS_CALIBRATED)	// 检测校准状态标志位
 		return FSC_FAIL;
 	return FSC_SUCCESS;
 }
@@ -95,14 +95,14 @@ static uint8_t AHT10_Get_State(void)
 {
 	uint8_t state = 0;
 	
-	EAXFR_ENABLE();																// (!important)
+	EAXFR_ENABLE();				// (!important)
 	I2C_Send_Start();
 	I2C_Send_Btye(AHT10_RD_ADDR);
 	I2C_Read_ACK();
 	state = I2C_Read_Byte();
 	I2C_Send_NACK();
 	I2C_Send_Stop();
-	EAXFR_DISABLE();															// (!important)
+	EAXFR_DISABLE();			// (!important)
 	return state;
 }
 
@@ -114,7 +114,7 @@ static uint8_t AHT10_Get_State(void)
 **/
 static void AHT10_Trigger_Measurement(void)
 {
-	EAXFR_ENABLE();																// (!important)
+	EAXFR_ENABLE();				// (!important)
 	I2C_Send_Start();
 	I2C_Send_Btye(AHT10_WR_ADDR);
 	I2C_Read_ACK();
@@ -125,22 +125,22 @@ static void AHT10_Trigger_Measurement(void)
 	I2C_Send_Btye(0x00);
 	I2C_Read_ACK();
 	I2C_Send_Stop();	
-	EAXFR_DISABLE();															// (!important)
+	EAXFR_DISABLE();			// (!important)
 }
 
 
 /**
- * @brief     AHT10获取数据函数
- * @param[in] dat							数据存放指针
- * @return    FSC_SUCCESS			获取数据成功
- * @return		FSC_FAIL				获取数据失败
+ * @brief     	AHT10获取数据函数
+ * @param[in] 	dat				数据存放指针
+ * @return    	FSC_SUCCESS		获取数据成功
+ * @return		FSC_FAIL		获取数据失败
 **/
 static FSCSTATE AHT10_Get_Data(uint8_t *dat)
 {
 	uint8_t state = 0;
 	uint8_t n = 0;
 	AHT10_Trigger_Measurement();
-	DELAY_Set_Ms(80);											// 等待测量
+	DELAY_Set_Ms(80);						// 等待测量
 	
 	EAXFR_ENABLE();
 	I2C_Send_Start();
@@ -148,7 +148,7 @@ static FSCSTATE AHT10_Get_Data(uint8_t *dat)
 	I2C_Read_ACK();
 	state = I2C_Read_Byte();
 	I2C_Send_ACK();
-	while (state & AHTX0_STATUS_BUSY)			// 检测忙状态标志位
+	while (state & AHTX0_STATUS_BUSY)		// 检测忙状态标志位
 	{
 		DELAY_Set_Ms(1);
 		n++;
@@ -170,7 +170,7 @@ static FSCSTATE AHT10_Get_Data(uint8_t *dat)
 /**
  * @brief     AHT10获取温度函数
  * @param[in] void
- * @return    ret_val				温度数据，分辨率0.01，单位℃
+ * @return    ret_val	温度数据，分辨率0.01，单位℃
 **/
 float AHT10_Get_Temperature(void)
 {
@@ -190,7 +190,7 @@ float AHT10_Get_Temperature(void)
 /**
  * @brief     AHT10获取湿度函数
  * @param[in] void
- * @return    ret_val				湿度数据，分辨率0.001，单位x100%
+ * @return    ret_val	湿度数据，分辨率0.001，单位x100%
 **/
 float AHT10_Get_Humidity(void)
 {
