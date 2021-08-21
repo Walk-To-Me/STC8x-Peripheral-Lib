@@ -43,7 +43,7 @@ static FSCSTATE AHT10_Get_Data(uint8_t *dat);
 /**
  * @brief     	AHT10初始化函数
  * @param[in] 	void
- * @return    	FSC_SUCCESS	初始化成功
+ * @return		FSC_SUCCESS	初始化成功
  * @return		FSC_FAIL	初始化失败
 **/
 FSCSTATE AHT10_Init(void)
@@ -132,7 +132,7 @@ static void AHT10_Trigger_Measurement(void)
 /**
  * @brief     	AHT10获取数据函数
  * @param[in] 	dat				数据存放指针
- * @return    	FSC_SUCCESS		获取数据成功
+ * @return		FSC_SUCCESS		获取数据成功
  * @return		FSC_FAIL		获取数据失败
 **/
 static FSCSTATE AHT10_Get_Data(uint8_t *dat)

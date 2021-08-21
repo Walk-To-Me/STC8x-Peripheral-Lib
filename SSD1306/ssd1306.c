@@ -257,7 +257,7 @@ void SSD1306_Clr(void)
 void SSD1306_Show_Char(uint8_t x, uint8_t y, uint8_t chr, FONT_SIZE_Type Size)
 {
 	uint8_t i, size_x;
-	size_x = Size / 2;																								// 字符宽度为字体尺寸的1/2
+	size_x = Size / 2;						// 字符宽度为字体尺寸的1/2
 	chr = chr - ' ';
 	SSD1306_Set_Pos(x, y);
 	for (i = 0; i < size_x; i++)
@@ -280,7 +280,7 @@ void SSD1306_Show_String(uint8_t x, uint8_t y, uint8_t *str, FONT_SIZE_Type Size
 	while (*str != '\0')
 	{
 		SSD1306_Show_Char(x, y, *(str++), Size);
-		x += Size / 2;																									// 偏移一个字符宽度(1/2字体尺寸)
+		x += Size / 2;						// 偏移一个字符宽度(1/2字体尺寸)
 	}
 }
 
@@ -404,13 +404,13 @@ void SSD1306_Show_Picture(uint8_t x, uint8_t y, uint8_t width, uint8_t height, u
 
 /**
  * @brief     SSD1306写字节函数
- * @param[in] dat  	一个字节数据
+ * @param[in] dat	一个字节数据
  * @param[in] state	数据处理类型，命令/数据  
  * @return    void
 **/
 static void SSD1306_Write_Byte(uint8_t dat, SSD1306_Type state)
 {
-	EAXFR_ENABLE();												// !important  XFR寄存器使能
+	EAXFR_ENABLE();								// !important  XFR寄存器使能
 	if (!state)
 	{
 		SSD1306_Write_Cmd(dat);
@@ -419,13 +419,13 @@ static void SSD1306_Write_Byte(uint8_t dat, SSD1306_Type state)
 	{
 		SSD1306_Write_Data(dat);
 	}
-	EAXFR_DISABLE();											// 关闭XFR寄存器使能
+	EAXFR_DISABLE();							// 关闭XFR寄存器使能
 }
 
 
 /**
  * @brief     IIC写命令
- * @param[in] cmd  	一个字节数据
+ * @param[in] cmd	一个字节数据
  * @return    void
 **/
 static void SSD1306_Write_Cmd(uint8_t cmd)
@@ -443,7 +443,7 @@ static void SSD1306_Write_Cmd(uint8_t cmd)
 	
 /**
  * @brief     IIC写数据
- * @param[in] dat  	一个字节数据
+ * @param[in] dat	一个字节数据
  * @return    void
 **/	
 static void SSD1306_Write_Data(uint8_t dat)
