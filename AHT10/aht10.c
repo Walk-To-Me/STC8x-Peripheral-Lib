@@ -51,13 +51,13 @@ FSCSTATE AHT10_Init(void)
 	DELAY_Set_Ms(45);					// …œµÁ—” ±
 	EAXFR_ENABLE();						// (!important)
 	I2C_Send_Start();
-	I2C_Send_Btye(AHT10_WR_ADDR);
+	I2C_Send_Byte(AHT10_WR_ADDR);
 	I2C_Read_ACK();
-	I2C_Send_Btye(AHT10_CMD_INITIALIZE);
+	I2C_Send_Byte(AHT10_CMD_INITIALIZE);
 	I2C_Read_ACK();
-	I2C_Send_Btye(0x08);
+	I2C_Send_Byte(0x08);
 	I2C_Read_ACK();
-	I2C_Send_Btye(0x00);
+	I2C_Send_Byte(0x00);
 	I2C_Read_ACK();
 	I2C_Send_Stop();
 	EAXFR_DISABLE();					// (!important)
@@ -77,9 +77,9 @@ void AHT10_Rst(void)
 {
 	EAXFR_ENABLE();
 	I2C_Send_Start();
-	I2C_Send_Btye(AHT10_WR_ADDR);
+	I2C_Send_Byte(AHT10_WR_ADDR);
 	I2C_Read_ACK();
-	I2C_Send_Btye(AHT10_CMD_SOFTRST);
+	I2C_Send_Byte(AHT10_CMD_SOFTRST);
 	I2C_Read_ACK();
 	I2C_Send_Stop();
 	EAXFR_DISABLE();
@@ -97,7 +97,7 @@ static uint8_t AHT10_Get_State(void)
 	
 	EAXFR_ENABLE();				// (!important)
 	I2C_Send_Start();
-	I2C_Send_Btye(AHT10_RD_ADDR);
+	I2C_Send_Byte(AHT10_RD_ADDR);
 	I2C_Read_ACK();
 	state = I2C_Read_Byte();
 	I2C_Send_NACK();
@@ -116,13 +116,13 @@ static void AHT10_Trigger_Measurement(void)
 {
 	EAXFR_ENABLE();				// (!important)
 	I2C_Send_Start();
-	I2C_Send_Btye(AHT10_WR_ADDR);
+	I2C_Send_Byte(AHT10_WR_ADDR);
 	I2C_Read_ACK();
-	I2C_Send_Btye(AHT10_CMD_TRIGGER);
+	I2C_Send_Byte(AHT10_CMD_TRIGGER);
 	I2C_Read_ACK();
-	I2C_Send_Btye(0x33);
+	I2C_Send_Byte(0x33);
 	I2C_Read_ACK();
-	I2C_Send_Btye(0x00);
+	I2C_Send_Byte(0x00);
 	I2C_Read_ACK();
 	I2C_Send_Stop();	
 	EAXFR_DISABLE();			// (!important)
@@ -144,7 +144,7 @@ static FSCSTATE AHT10_Get_Data(uint8_t *dat)
 	
 	EAXFR_ENABLE();
 	I2C_Send_Start();
-	I2C_Send_Btye(AHT10_RD_ADDR);
+	I2C_Send_Byte(AHT10_RD_ADDR);
 	I2C_Read_ACK();
 	state = I2C_Read_Byte();
 	I2C_Send_ACK();
