@@ -4,7 +4,7 @@
 /*----------------------------------------------------------------------
   - File name     : aht10.h
   - Author        : Walk-To-Me
-  - Update date   : 2021年8月21日
+  - Update date   : 2021年8月22日
   -	Copyright(C)  : 2021-2022 Walk-To_Me. All rights reserved.
 -----------------------------------------------------------------------*/
 /*------------------------------------------------------------------------
@@ -29,13 +29,36 @@
 
 #include "ELL_CORE.h"
 #include "ELL_TYPE.h"
+#include "soft_i2c.h"
 #include "STC8x_I2C.h"
 #include "STC8x_DELAY.h"
 
 /*-----------------------------------------------------------------------
-|                             USER CONFIG	                            |
+|                             USER CONFIG                               |
 -----------------------------------------------------------------------*/
+#define AHT10_I2C_SET					0				// 0 硬件I2C  1 软件I2C
 #define AHT10_ADDR					0x38				// AHT10器件地址
+
+
+#if (AHT10_I2C_SET)
+	#define AHT10_I2C_Send_Start()			Soft_I2C_Send_Start()
+	#define AHT10_I2C_Send_Stop()			Soft_I2C_Send_Stop()
+	#define AHT10_I2C_Read_ACK()			Soft_I2C_Read_ACK()
+	#define AHT10_I2C_Send_ACK()			Soft_I2C_Send_ACK()
+	#define AHT10_I2C_Send_NACK()			Soft_I2C_Send_NACK()
+	#define AHT10_I2C_Send_Byte(dat)		Soft_I2C_Send_Byte(dat)
+	#define AHT10_I2C_Read_Byte()			Soft_I2C_Read_Byte()
+#endif
+
+#if (!AHT10_I2C_SET)
+	#define AHT10_I2C_Send_Start()			I2C_Send_Start()
+	#define AHT10_I2C_Send_Stop()			I2C_Send_Stop()
+	#define AHT10_I2C_Read_ACK()			I2C_Read_ACK()
+	#define AHT10_I2C_Send_ACK()			I2C_Send_ACK()
+	#define AHT10_I2C_Send_NACK()			I2C_Send_NACK()
+	#define AHT10_I2C_Send_Byte(dat)		I2C_Send_Byte(dat)
+	#define AHT10_I2C_Read_Byte()			I2C_Read_Byte()
+#endif
 
 /*-----------------------------------------------------------------------
 |                             CMD CONFIG                                |
