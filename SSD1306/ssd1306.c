@@ -430,14 +430,14 @@ static void SSD1306_Write_Byte(uint8_t dat, SSD1306_Type state)
 **/
 static void SSD1306_Write_Cmd(uint8_t cmd)
 {
-	I2C_Send_Start();
-	I2C_Send_Btye(0x78);
-	I2C_Read_ACK();
-	I2C_Send_Btye(0x00);
-	I2C_Read_ACK();
-	I2C_Send_Btye(cmd);
-	I2C_Read_ACK();
-	I2C_Send_Stop();
+	SSD1306_I2C_Send_Start();
+	SSD1306_I2C_Send_Byte(0x78);
+	SSD1306_I2C_Read_ACK();
+	SSD1306_I2C_Send_Byte(0x00);
+	SSD1306_I2C_Read_ACK();
+	SSD1306_I2C_Send_Byte(cmd);
+	SSD1306_I2C_Read_ACK();
+	SSD1306_I2C_Send_Stop();
 }
 
 
@@ -448,15 +448,16 @@ static void SSD1306_Write_Cmd(uint8_t cmd)
 **/
 static void SSD1306_Write_Data(uint8_t dat)
 {
-	I2C_Send_Start();
-	I2C_Send_Btye(0x78);
-	I2C_Read_ACK();
-	I2C_Send_Btye(0x40);
-	I2C_Read_ACK();
-	I2C_Send_Btye(dat);
-	I2C_Read_ACK();
-	I2C_Send_Stop();
+	SSD1306_I2C_Send_Start();
+	SSD1306_I2C_Send_Byte(0x78);
+	SSD1306_I2C_Read_ACK();
+	SSD1306_I2C_Send_Byte(0x40);
+	SSD1306_I2C_Read_ACK();
+	SSD1306_I2C_Send_Byte(dat);
+	SSD1306_I2C_Read_ACK();
+	SSD1306_I2C_Send_Stop();
 }
+
 
 /*-----------------------------------------------------------------------
 |                   END OF FLIE.  (C) COPYRIGHT Walk-To-Me              |

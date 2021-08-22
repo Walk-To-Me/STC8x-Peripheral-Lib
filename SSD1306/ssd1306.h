@@ -30,6 +30,7 @@
 #include "ELL_CORE.h"
 #include "ELL_TYPE.h"
 #include "STC8x_I2C.h"
+#include "soft_i2c.h"
 
 
 /*-----------------------------------------------------------------------
@@ -60,10 +61,31 @@
 /*-----------------------------------------------------------------------
 |                             USER CONFIG                               |
 -----------------------------------------------------------------------*/
-#define X_WIDTH 						128					// OLED屏幕宽度
-#define Y_WIDTH							64					// OLED屏幕高度
-#define PAGE							(Y_WIDTH >> 3)				// OLED屏幕页数
-#define EXTERNAL_VCC						DISABLE					// 是否启用外部电源
+#define SSD1306_IIC_SET						1			// 0 硬件I2C  1 软件I2C
+#define X_WIDTH 						128			// OLED屏幕宽度
+#define Y_WIDTH							64			// OLED屏幕高度
+#define PAGE							(Y_WIDTH >> 3)		// OLED屏幕页数
+#define EXTERNAL_VCC						DISABLE			// 是否启用外部电源
+
+#if (SSD1306_IIC_SET)
+	#define SSD1306_I2C_Send_Start()			Soft_I2C_Send_Start()
+	#define SSD1306_I2C_Send_Stop()				Soft_I2C_Send_Stop()
+	#define SSD1306_I2C_Read_ACK()				Soft_I2C_Read_ACK()
+	#define SSD1306_I2C_Send_ACK()				Soft_I2C_Send_ACK()
+	#define SSD1306_I2C_Send_NACK()				Soft_I2C_Send_NACK()
+	#define SSD1306_I2C_Send_Byte(dat)			Soft_I2C_Send_Byte(dat)
+	#define SSD1306_I2C_Read_Byte()				Soft_I2C_Read_Byte()
+#endif
+
+#if (!SSD1306_IIC_SET)
+	#define SSD1306_I2C_Send_Start()			I2C_Send_Start()
+	#define SSD1306_I2C_Send_Stop()				I2C_Send_Stop()
+	#define SSD1306_I2C_Read_ACK()				I2C_Read_ACK()
+	#define SSD1306_I2C_Send_ACK()				I2C_Send_ACK()
+	#define SSD1306_I2C_Send_NACK()				I2C_Send_NACK()
+	#define SSD1306_I2C_Send_Byte(dat)			I2C_Send_Byte(dat)
+	#define SSD1306_I2C_Read_Byte()				I2C_Read_Byte()
+#endif
 
 
 /*-----------------------------------------------------------------------
