@@ -2,7 +2,7 @@
 |                            FILE DESCRIPTION                           |
 -----------------------------------------------------------------------*/
 /*----------------------------------------------------------------------
-  - File name     : soft_iic.c
+  - File name     : soft_i2c.c
   - Author        : Walk-To-Me
   - Update date   : 2021年8月22日
   -	Copyright(C)  : 2021-2022 Walk-To_Me. All rights reserved.
@@ -24,7 +24,7 @@
 /*-----------------------------------------------------------------------
 |                               INCLUDES                                |
 -----------------------------------------------------------------------*/
-#include "soft_iic.h"
+#include "soft_i2c.h"
 /*-----------------------------------------------------------------------
 |                                 DATA                                  |
 -----------------------------------------------------------------------*/
@@ -44,10 +44,10 @@ static void Delay4us(void);
  * @param[in] void
  * @return    void
 **/
-void Soft_IIC_Init(void)
+void Soft_I2C_Init(void)
 {
-	Soft_IIC_SCL = 1;
-	Soft_IIC_SDA = 1;
+	Soft_I2C_SCL = 1;
+	Soft_I2C_SDA = 1;
 }
 
 /**
@@ -55,15 +55,14 @@ void Soft_IIC_Init(void)
  * @param[in] void
  * @return    void
 **/
-void Soft_IIC_Send_Start(void)
+void Soft_I2C_Send_Start(void)
 {
-	Soft_IIC_Out();
-	Soft_IIC_SDA = 1;
-	Soft_IIC_SCL = 1;
+	Soft_I2C_SDA = 1;
+	Soft_I2C_SCL = 1;
 	Delay4us();
-	Soft_IIC_SDA = 0;
+	Soft_I2C_SDA = 0;
 	Delay4us();
-	Soft_IIC_SCL = 0;
+	Soft_I2C_SCL = 0;
 }
 
 /**
@@ -71,14 +70,13 @@ void Soft_IIC_Send_Start(void)
  * @param[in] void
  * @return    void
 **/
-void Soft_IIC_Send_Stop(void)
+void Soft_I2C_Send_Stop(void)
 {
-	Soft_IIC_Out();
-	Soft_IIC_SCL = 0;
-	Soft_IIC_SDA = 0;
+	Soft_I2C_SCL = 0;
+	Soft_I2C_SDA = 0;
 	Delay4us();
-	Soft_IIC_SCL = 1;
-	Soft_IIC_SDA = 1;
+	Soft_I2C_SCL = 1;
+	Soft_I2C_SDA = 1;
 	Delay4us();
 }
 
@@ -88,24 +86,23 @@ void Soft_IIC_Send_Stop(void)
  * @return    FSC_SUCCESS	获取ACK成功
  * @return    FSC_FAIL		获取ACK失败
 **/
-FSCSTATE Soft_IIC_Read_ACK(void)
+FSCSTATE Soft_I2C_Read_ACK(void)
 {
 	uint8_t n = 0;
-	Soft_IIC_In();
-	Soft_IIC_SDA = 1;
+	Soft_I2C_SDA = 1;		// SDA引脚拉高， WEAKPULL 模式下允许输入
 	Delay1us();
-	Soft_IIC_SCL = 1;
+	Soft_I2C_SCL = 1;
 	Delay1us();
-	while (Soft_IIC_SDA)
+	while (Soft_I2C_SDA)		// 使用 WEAKPULL 模式下输入功能，须先将IO口拉高
 	{
 		n++;
 		if (n > 250)
 		{
-			Soft_IIC_Send_Stop();
+			Soft_I2C_Send_Stop();
 			return FSC_FAIL;
 		}
 	}
-	Soft_IIC_SCL = 0;
+	Soft_I2C_SCL = 0;
 	return FSC_SUCCESS;
 }
 
@@ -114,15 +111,14 @@ FSCSTATE Soft_IIC_Read_ACK(void)
  * @param[in] void
  * @return    void
 **/
-void Soft_IIC_Send_ACK(void)
+void Soft_I2C_Send_ACK(void)
 {
-	Soft_IIC_SCL = 0;
-	Soft_IIC_Out();
-	Soft_IIC_SDA = 0;
+	Soft_I2C_SCL = 0;
+	Soft_I2C_SDA = 0;
 	Delay2us();
-	Soft_IIC_SCL = 1;
+	Soft_I2C_SCL = 1;
 	Delay2us();
-	Soft_IIC_SCL = 0;
+	Soft_I2C_SCL = 0;
 }
 
 /**
@@ -130,15 +126,14 @@ void Soft_IIC_Send_ACK(void)
  * @param[in] void
  * @return    void
 **/
-void Soft_IIC_Send_NACK(void)
+void Soft_I2C_Send_NACK(void)
 {
-	Soft_IIC_SCL = 0;
-	Soft_IIC_Out();
-	Soft_IIC_SDA = 1;
+	Soft_I2C_SCL = 0;
+	Soft_I2C_SDA = 1;
 	Delay2us();
-	Soft_IIC_SCL = 1;
+	Soft_I2C_SCL = 1;
 	Delay2us();
-	Soft_IIC_SCL = 0;
+	Soft_I2C_SCL = 0;
 }
 
 /**
@@ -146,19 +141,18 @@ void Soft_IIC_Send_NACK(void)
 * @param[in] dat	发送的字节数据
  * @return    void
 **/
-void Soft_IIC_Send_Byte(uint8_t dat)
+void Soft_I2C_Send_Byte(uint8_t dat)
 {
 	uint8_t i;
-	Soft_IIC_Out();
-	Soft_IIC_SCL = 0;
+	Soft_I2C_SCL = 0;
 	for (i = 0; i < 8; i++)
 	{
-		Soft_IIC_SDA = (dat&0x80) >> 7;
+		Soft_I2C_SDA = (dat&0x80) >> 7;
 		dat <<= 1;
 		Delay2us();
-		Soft_IIC_SCL = 1;
+		Soft_I2C_SCL = 1;
 		Delay2us();
-		Soft_IIC_SCL = 0;
+		Soft_I2C_SCL = 0;
 		Delay2us();
 	}
 }
@@ -168,18 +162,18 @@ void Soft_IIC_Send_Byte(uint8_t dat)
  * @param[in] void
  * @return    ret_val	获取的字节数据
 **/
-uint8_t Soft_IIC_Read_Byte(void)
+uint8_t Soft_I2C_Read_Byte(void)
 {
 	uint8_t i;
 	uint8_t ret_val;
-	Soft_IIC_In();
+	Soft_I2C_SDA = 1;	// WEAKPULL 模式下须拉高引脚才能启用输入功能 (!important)
 	for (i = 0; i < 8; i++)
 	{
-		Soft_IIC_SCL = 0;
+		Soft_I2C_SCL = 0;
 		Delay2us();
-		Soft_IIC_SCL = 1;
+		Soft_I2C_SCL = 1;
 		ret_val <<= 1;
-		if (Soft_IIC_SDA) ret_val++;
+		if (Soft_I2C_SDA) ret_val++;
 		Delay1us();
 	}
 	return ret_val;
